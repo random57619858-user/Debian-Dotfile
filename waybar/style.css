@@ -1,0 +1,142 @@
+* {
+    border: none;
+    border-radius: 0; 
+    font-family: "Symbols Nerd Font", "Font Awesome 6 Free", "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+#workspaces {
+    background: #3c3836;
+    border: 2px solid #504945;
+    padding: 0;
+}
+
+#workspaces button {
+    padding: 0 10px;
+    color: #a89984;
+    background: #3c3836;
+    border-right: 1px solid #504945;
+    transition: all 0.15s ease;
+}
+
+#workspaces button:hover {
+    background: #504945;
+    color: #ebdbb2;
+}
+
+#workspaces button.active {
+    color: #282828;
+    background: #fe8019; 
+}
+
+#custom-cava {
+    background: #282828;
+    color: #b8bb24; 
+    border: 2px solid #504945;
+    padding: 0 14px;
+    margin-left: 8px;
+    font-size: 14px; 
+    letter-spacing: 1px; 
+}
+
+#window {
+    background: #282828;
+    color: #8ec07c; 
+    border: 2px solid #504945;
+    padding: 0 12px;
+    margin-left: 8px;
+}
+
+#window.empty {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+}
+
+#clock {
+    background: #3c3836; 
+    color: #ebdbb2; 
+    border: 2px solid #504945;
+    padding: 0 14px;
+    border-right: none; 
+}
+
+#mpris {
+    background: #3c3836;
+    color: #83a598; 
+    border: 2px solid #504945;
+    padding: 0 14px;
+    border-left: 1px solid #504945;
+}
+
+#mpris.paused {
+    color: #a89984; 
+}
+
+#mpris.stopped {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+}
+
+#cpu {
+    background: #fb4934;
+    color: #282828;
+    padding: 0 8px;
+    margin-left: 2px;
+}
+
+#memory {
+    background: #fabd2f;
+    color: #282828;
+    padding: 0 8px;
+    margin-left: 2px;
+}
+
+#pulseaudio {
+    background: #b8bb24;
+    color: #282828;
+    padding: 0 8px;
+    margin-left: 2px;
+}
+
+#network {
+    background: #83a598;
+    color: #282828;
+    padding: 0 8px;
+    margin-left: 2px;
+}
+
+#battery {
+    background: #d3869b;
+    color: #282828;
+    padding: 0 8px;
+    margin-left: 2px;
+}
+
+#battery.warning {
+    background: #d65d0e;
+    color: #ebdbb2;
+}
+
+#battery.critical {
+    background: #cc241d;
+    color: #ffffff;
+}
+
+#tray {
+    background: #3c3836;
+    border: 2px solid #504945;
+    padding: 0 8px;
+    margin-left: 6px;
+}

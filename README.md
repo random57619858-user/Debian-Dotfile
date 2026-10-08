@@ -28,6 +28,8 @@ chmod +x install.sh
 After a reboot, log in and launch Hyprland. In the future I'd like to add a
 proper display manager (SDDM or GDM) to make login cleaner, but for now
 launching it manually or from a TTY is fine.
+Run in tty: Hyprland
+(If that's all)
 
 What it installs
 

@@ -1,10 +1,12 @@
 #!/bin/bash
+set -euo pipefail
 
 CACHE_FILE="$HOME/.cache/current_wallpaper"
 CACHE_DIR="$(dirname "$CACHE_FILE")"
+SWAYBG_MODE="${SWAYBG_MODE:-fill}"
 
 detect_image_dir() {
-    for dir in "$HOME/Imágenes" "$HOME/Pictures" "$HOME/Images"; do
+    for dir in "$HOME/Pictures" "$HOME/Images" "$HOME/Imágenes"; do
         if [ -d "$dir" ]; then
             echo "$dir"
             return 0
@@ -13,68 +15,61 @@ detect_image_dir() {
     return 1
 }
 
-restore_wallpaper() {
-    if [ ! -f "$CACHE_FILE" ]; then
-        return 0
-    fi
-
-    local saved
-    saved=$(cat "$CACHE_FILE")
-
-    if [ -f "$saved" ]; then
-        pkill -x swaybg 2>/dev/null
-        swaybg -i "$saved" -m fill >/dev/null 2>&1 &
-        disown
+require_cmd() {
+    if ! command -v "$1" &>/dev/null; then
+        notify-send "Wallpaper" "$1 is not installed" 2>/dev/null || echo "$1 is not installed" >&2
+        exit 1
     fi
 }
 
-if [ "$1" = "restore" ]; then
-    if ! command -v swaybg &>/dev/null; then
-        echo "swaybg no está instalado" >&2
-        exit 1
+apply_wallpaper() {
+    local img="$1"
+    pkill -x swaybg 2>/dev/null || true
+    swaybg -i "$img" -m "$SWAYBG_MODE" >/dev/null 2>&1 &
+    disown
+}
+
+restore_wallpaper() {
+    [ -f "$CACHE_FILE" ] || return 0
+    local saved
+    saved=$(cat "$CACHE_FILE")
+    if [ -f "$saved" ]; then
+        apply_wallpaper "$saved"
     fi
+}
+
+require_cmd swaybg
+
+if [ "${1:-}" = "restore" ]; then
     restore_wallpaper
     exit 0
 fi
 
-if ! command -v swaybg &>/dev/null; then
-    notify-send "Error" "swaybg not installed"
-    exit 1
-fi
+require_cmd rofi
 
-IMAGE_DIR=$(detect_image_dir)
-
-if [ -z "$IMAGE_DIR" ]; then
-    notify-send "Error"
+IMAGE_DIR=$(detect_image_dir) || {
+    notify-send "Wallpaper" "No image directory found" 2>/dev/null || echo "No image directory found" >&2
     exit 1
-fi
+}
 
 TEMP_LIST=$(mktemp)
 trap 'rm -f "$TEMP_LIST"' EXIT
 
 find "$IMAGE_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp" \) \
-    | sort \
-    | while read -r img; do
-        relpath="${img#$IMAGE_DIR/}"
-        echo "$relpath|$img"
-    done > "$TEMP_LIST"
+    -printf "%P|%p\n" | sort > "$TEMP_LIST"
 
 if [ ! -s "$TEMP_LIST" ]; then
-    notify-send "Rofi Wallpaper error"
+    notify-send "Wallpaper" "No images found in $IMAGE_DIR" 2>/dev/null || echo "No images found" >&2
     exit 1
 fi
 
-chosen=$(awk -F'|' '{print $1}' "$TEMP_LIST" | rofi -dmenu -p "󰸉 Wallpaper" -i)
+chosen=$(awk -F'|' '{print $1}' "$TEMP_LIST" | rofi -dmenu -p "󰸉 Wallpaper" -i -matching fuzzy)
 
-if [ -n "$chosen" ]; then
+if [ -n "${chosen:-}" ]; then
     full_path=$(grep -F "$chosen|" "$TEMP_LIST" | head -n 1 | cut -d'|' -f2-)
-
     if [ -f "$full_path" ]; then
         mkdir -p "$CACHE_DIR"
         echo "$full_path" > "$CACHE_FILE"
-
-        pkill -x swaybg 2>/dev/null
-        swaybg -i "$full_path" -m fill >/dev/null 2>&1 &
-        disown
+        apply_wallpaper "$full_path"
     fi
 fi

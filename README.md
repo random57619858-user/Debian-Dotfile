@@ -86,7 +86,6 @@ Optional (asked during install):
 ```
 Keybindings
 ```
-Key	Action
 SUPER + Q	Open kitty
 SUPER + D	App launcher (rofi)
 SUPER + W	Change wallpaper

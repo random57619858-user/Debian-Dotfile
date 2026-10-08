@@ -1,4 +1,4 @@
-# Debian-Dotfile (Hyprland)
+# Debian-Hypr-Dotfile
 
 A basic Hyprland dotfile for **Debian Sid**.
 It sets up a minimal, gruvbox-themed desktop: compositor, bar, launcher,

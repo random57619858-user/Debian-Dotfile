@@ -86,17 +86,17 @@ Optional (asked during install):
 ```
 Keybindings
 ```
-SUPER + Q	Open kitty
-SUPER + D	App launcher (rofi)
-SUPER + W	Change wallpaper
-SUPER + C	Close window
-SUPER + V	Toggle floating window
-SUPER + A	Clipboard history
-SUPER + L	Lock screen
-SUPER + 1-0	Switch workspace
-SUPER + SHIFT + 1-0	Move window to workspace
-SUPER + SHIFT + E	Power menu (wlogout)
-SUPER + Print	Screenshot
+SUPER + Q	           Open kitty
+SUPER + D	           App launcher (rofi)
+SUPER + W 	           Change wallpaper
+SUPER + C	           Close window
+SUPER + V	           Toggle floating window
+SUPER + A	           Clipboard history
+SUPER + L	           Lock screen
+SUPER + 1-0	           Switch workspace
+SUPER + SHIFT + 1-0	   Move window to workspace
+SUPER + SHIFT + E	   Power menu (wlogout)
+SUPER + Print	       Screenshot
 ```
 
 Backups

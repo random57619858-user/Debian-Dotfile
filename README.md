@@ -111,3 +111,4 @@ It's not the best dotfile, but I hope you like it :)
 
 <img width="1366" height="768" alt="imagen" src="https://github.com/user-attachments/assets/68700ec4-a07a-4609-94ae-e0b3281434b3" />
 
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/9a6554fd-20c5-481c-9163-0b7872f84037" />

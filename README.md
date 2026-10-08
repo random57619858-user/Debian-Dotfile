@@ -30,7 +30,7 @@ comfortable with that, this repo isn't for you.
 ## Installation
 
 ```bash
-git clone https://github.com/random57619858-user/Debian-Hypr-Dotfiles.git
+git clone https://github.com/random57619858-user/Debian-Hypr-Dotfiles
 cd Debian-Hypr-Dotfiles
 chmod +x install.sh
 ./install.sh

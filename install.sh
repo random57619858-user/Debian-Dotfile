@@ -1,6 +1,5 @@
 set -euo pipefail
 
-# ─── Colors ───────────────────────────────────────────────────────────────
 ESC=$(printf '\033')
 RESET="${ESC}[0m"
 BOLD="${ESC}[1m"
@@ -10,7 +9,6 @@ YELLOW="${ESC}[33m"
 BLUE="${ESC}[34m"
 RED="${ESC}[31m"
 
-# ─── Helpers ──────────────────────────────────────────────────────────────
 banner() {
     clear
     echo -e "${CYAN}${BOLD}"
@@ -32,7 +30,6 @@ confirm() {
     [[ "${reply:-}" =~ ^[yYsS]$ ]]
 }
 
-# ─── Preflight ────────────────────────────────────────────────────────────
 banner
 
 if ! sudo -v; then
@@ -44,7 +41,6 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKUP_ROOT="$DOTFILES_DIR/backup"
 mkdir -p "$BACKUP_ROOT"
 
-# ─── Repo setup (Sid) ─────────────────────────────────────────────────────
 info "Switching APT to Debian unstable (Sid)..."
 warn "This will replace /etc/apt/sources.list. Sid is a rolling release."
 warn "You may hit occasional breakage. Make sure you know what you're doing."
@@ -68,7 +64,6 @@ deb http://deb.debian.org/debian/ unstable main contrib non-free non-free-firmwa
 deb-src http://deb.debian.org/debian/ unstable main contrib non-free non-free-firmware
 EOF
 
-# ─── Base packages ────────────────────────────────────────────────────────
 info "Updating and installing base packages..."
 sudo apt update
 sudo apt full-upgrade -y
@@ -79,14 +74,12 @@ sudo apt install -y \
     xdg-user-dirs git unzip build-essential curl wget \
     fonts-noto-color-emoji fonts-nerd-symbols fonts-jetbrains-mono
 
-# ─── Audio ────────────────────────────────────────────────────────────────
 info "Enabling PipeWire services..."
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 systemctl --user enable --now pipewire.socket
 systemctl --user enable --now pipewire-pulse.socket
 systemctl --user enable --now wireplumber.service
 
-# ─── Fonts ────────────────────────────────────────────────────────────────
 info "Installing JetBrainsMono Nerd Font..."
 mkdir -p "$HOME/.local/share/fonts"
 FONT_TEMP="$(mktemp -d)"
@@ -98,7 +91,6 @@ unzip -oq "$FONT_TEMP/JetBrainsMono.zip" -d "$HOME/.local/share/fonts/JetBrainsM
 fc-cache -f "$HOME/.local/share/fonts" > /dev/null
 ok "Font installed."
 
-# ─── Optional stuff ───────────────────────────────────────────────────────
 info "Optional components..."
 
 if confirm "Install printer support?"; then
@@ -141,7 +133,6 @@ if confirm "Install extra apps (Steam, OnlyOffice, Discord)?"; then
     ok "Extra apps installed."
 fi
 
-# ─── User dirs ────────────────────────────────────────────────────────────
 info "Setting up user directories..."
 xdg-user-dirs-update
 if [ -d "$HOME/Imágenes" ]; then
@@ -151,7 +142,6 @@ else
 fi
 mkdir -p "$IMG_DIR"
 
-# ─── Fluent icons ─────────────────────────────────────────────────────────
 info "Installing Fluent icon theme..."
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
@@ -162,7 +152,6 @@ git clone --depth=1 https://github.com/vinceliuice/Fluent-icon-theme.git \
   ./install.sh -d "$HOME/.local/share/icons" )
 ok "Icons installed."
 
-# ─── GTK ──────────────────────────────────────────────────────────────────
 info "Applying GTK settings..."
 mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/gtk-4.0" "$HOME/.config/nwg-look"
 
@@ -187,7 +176,6 @@ if command -v gsettings &> /dev/null; then
     gsettings set org.gnome.desktop.interface icon-theme 'Fluent-dark'
 fi
 
-# ─── Dotfiles ─────────────────────────────────────────────────────────────
 info "Deploying dotfiles..."
 
 deploy() {
@@ -247,12 +235,10 @@ else
     warn "Fluent-dark icon theme not found, skipping wlogout icons."
 fi
 
-# ─── Wallpapers ───────────────────────────────────────────────────────────
 if [ -d "$DOTFILES_DIR/wallpapers" ]; then
     cp -rf "$DOTFILES_DIR/wallpapers/." "$IMG_DIR/"
 fi
 
-# ─── Permissions ──────────────────────────────────────────────────────────
 info "Fixing script permissions..."
 find "$HOME/.config" -type f -name "*.sh" -exec chmod +x {} +
 find "$DOTFILES_DIR" -type f -name "*.sh" -exec chmod +x {} +

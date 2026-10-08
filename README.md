@@ -8,7 +8,7 @@ reboot and just use it.
 
 This script switches `/etc/apt/sources.list` to **Debian unstable (Sid)**.
 Hyprland and some of its dependencies are only available there, so there's no
-way around it if you want a modern setup on Debian.
+way around it if you want a modern setup on Debian D:
 
 Sid is a rolling release. Breakage happens. That's the trade-off. If you're not
 comfortable with that, this repo isn't for you.
@@ -104,4 +104,8 @@ Backups
 The script asks before overwriting anything in ~/.config/. If you say yes,
 a copy is saved to backup/ inside this repo. Your sources.list can also be
 backed up before it's replaced.
+
+It's not the best dotfile, but I hope you like it :)
+
+<img width="1366" height="768" alt="imagen" src="https://github.com/user-attachments/assets/68700ec4-a07a-4609-94ae-e0b3281434b3" />
 

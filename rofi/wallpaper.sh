@@ -3,7 +3,6 @@ set -euo pipefail
 
 CACHE_FILE="$HOME/.cache/current_wallpaper"
 CACHE_DIR="$(dirname "$CACHE_FILE")"
-SWAYBG_MODE="${SWAYBG_MODE:-fill}"
 
 detect_image_dir() {
     for dir in "$HOME/Pictures" "$HOME/Images" "$HOME/Imágenes"; do
@@ -22,11 +21,20 @@ require_cmd() {
     fi
 }
 
+ensure_hyprpaper() {
+    if ! pgrep -x hyprpaper &>/dev/null; then
+        hyprpaper >/dev/null 2>&1 &
+        disown
+        sleep 0.3
+    fi
+}
+
 apply_wallpaper() {
     local img="$1"
-    pkill -x swaybg 2>/dev/null || true
-    swaybg -i "$img" -m "$SWAYBG_MODE" >/dev/null 2>&1 &
-    disown
+    ensure_hyprpaper
+    hyprctl hyprpaper unload all >/dev/null 2>&1 || true
+    hyprctl hyprpaper preload "$img" >/dev/null 2>&1 || true
+    hyprctl hyprpaper wallpaper ",$img" >/dev/null 2>&1 || true
 }
 
 restore_wallpaper() {
@@ -38,7 +46,8 @@ restore_wallpaper() {
     fi
 }
 
-require_cmd swaybg
+require_cmd hyprctl
+require_cmd hyprpaper
 
 if [ "${1:-}" = "restore" ]; then
     restore_wallpaper

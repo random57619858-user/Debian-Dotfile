@@ -108,7 +108,7 @@ sudo apt install -y -t trixie-backports \
 info "Installing desktop tools..."
 sudo apt install -y \
     gdm3 \
-    firefox nautilus kitty cava rofi swaybg playerctl \
+    firefox nautilus kitty cava rofi hyprpaper playerctl \
     brightnessctl waybar wl-clipboard grim slurp nwg-look \
     pipewire zenity wlogout cliphist wireplumber pipewire-audio \
     xdg-user-dirs git unzip build-essential curl wget \

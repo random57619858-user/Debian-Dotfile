@@ -11,15 +11,19 @@ configuration {
 * {
     bg-transparent:  rgba(0, 0, 0, 0);
     bg-modulo:       #282828;
-    bg-input:        #3c3836; 
-    bg-active:       #fe8019;
-   
-    fg-bright:       #fbf1c7; 
-    fg-main:         #ebdbb2; 
-    fg-dark:         #282828; 
-    
-    accent-green:    #8ec07c;
-    border-color:    #504945; 
+    bg-input:        #3c3836;
+    bg-active:       #d65d0e;
+
+    fg-bright:       #fbf1c7;
+    fg-main:         #ebdbb2;
+    fg-dark:         #282828;
+    fg-muted:        #928374;
+
+    accent-yellow:   #d79921;
+    accent-green:    #b8bb26;
+    accent-aqua:     #8ec07c;
+    border-color:    #504945;
+    border-focus:    #665c54;
 
     background-color: transparent;
     text-color:       @fg-main;
@@ -27,10 +31,11 @@ configuration {
 
 window {
     transparency:       "real";
-    background-color:   @bg-transparent; 
+    background-color:   @bg-transparent;
     border:             none;
     width:              650px;
-    padding:            0px;
+    padding:            12px;
+    border-radius:      10px;
 }
 
 mainbox {
@@ -43,30 +48,31 @@ inputbar {
     background-color:   @bg-input;
     border:             2px;
     border-color:       @border-color;
-    padding:            8px 14px;
+    border-radius:      8px;
+    padding:            10px 16px;
     spacing:            10px;
     children:           [ prompt, entry ];
 }
 
 prompt {
     background-color:   @bg-transparent;
-    text-color:         @accent-green;
+    text-color:         @accent-yellow;
     vertical-align:     0.5;
 }
 
 entry {
     background-color:   @bg-transparent;
     placeholder:        "Buscar...";
-    placeholder-color:  @border-color;
+    placeholder-color:  @fg-muted;
     text-color:         @fg-bright;
     vertical-align:     0.5;
 }
 
 listview {
-    background-color:   @bg-transparent; 
+    background-color:   @bg-transparent;
     columns:            1;
     lines:              5;
-    spacing:            10px; 
+    spacing:            6px;
     cycle:              true;
     dynamic:            true;
     scrollbar:          false;
@@ -79,7 +85,8 @@ element {
     orientation:        horizontal;
     padding:            10px 14px;
     border:             2px;
-    border-color:       @border-color; 
+    border-color:       @border-color;
+    border-radius:      8px;
 }
 
 element normal.normal {
@@ -88,10 +95,10 @@ element normal.normal {
 }
 
 element selected.normal {
-    background-color:   @bg-active; 
-    text-color:         @fg-dark;
+    background-color:   @bg-active;
+    text-color:         @fg-bright;
     border:             2px;
-    border-color:       @border-color; 
+    border-color:       @bg-active;
 }
 
 element alternate.normal {

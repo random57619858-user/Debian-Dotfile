@@ -15,6 +15,7 @@ hl.exec_cmd("waybar")
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("sleep 2 && $HOME/.config/hypr/welcome.sh")
+    hl.exec_cmd("hyprpaper")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
 end)
 
@@ -135,7 +136,7 @@ local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("rofi -show drun"))
-hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("$HOME/.config/rofi/wallpaper.sh restore"))
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("$HOME/.config/rofi/wallpaper.sh"))
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))

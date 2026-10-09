@@ -21,39 +21,7 @@ require_cmd() {
     fi
 }
 
-ensure_hyprpaper() {
-    if ! pgrep -x hyprpaper &>/dev/null; then
-        hyprpaper >/dev/null 2>&1 &
-        disown
-        sleep 0.3
-    fi
-}
-
-apply_wallpaper() {
-    local img="$1"
-    ensure_hyprpaper
-    hyprctl hyprpaper unload all >/dev/null 2>&1 || true
-    hyprctl hyprpaper preload "$img" >/dev/null 2>&1 || true
-    hyprctl hyprpaper wallpaper ",$img" >/dev/null 2>&1 || true
-}
-
-restore_wallpaper() {
-    [ -f "$CACHE_FILE" ] || return 0
-    local saved
-    saved=$(cat "$CACHE_FILE")
-    if [ -f "$saved" ]; then
-        apply_wallpaper "$saved"
-    fi
-}
-
 require_cmd hyprctl
-require_cmd hyprpaper
-
-if [ "${1:-}" = "restore" ]; then
-    restore_wallpaper
-    exit 0
-fi
-
 require_cmd rofi
 
 IMAGE_DIR=$(detect_image_dir) || {
@@ -79,6 +47,8 @@ if [ -n "${chosen:-}" ]; then
     if [ -f "$full_path" ]; then
         mkdir -p "$CACHE_DIR"
         echo "$full_path" > "$CACHE_FILE"
-        apply_wallpaper "$full_path"
+        hyprctl hyprpaper unload all >/dev/null 2>&1 || true
+        hyprctl hyprpaper preload "$full_path" >/dev/null 2>&1 || true
+        hyprctl hyprpaper wallpaper ",$full_path" >/dev/null 2>&1 || true
     fi
 fi

@@ -104,6 +104,9 @@ sudo apt install -y \
     xdg-user-dirs git unzip build-essential curl gdm3 wget \
     fonts-noto-color-emoji fonts-nerd-symbols fonts-jetbrains-mono
 
+info "Enabling GDM..."
+sudo systemctl enable gdm3
+ok "GDM enabled."
 
 info "Enabling PipeWire services..."
 if [ -z "${XDG_RUNTIME_DIR:-}" ]; then

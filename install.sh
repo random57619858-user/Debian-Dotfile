@@ -101,8 +101,9 @@ sudo apt install -y \
     hyprland firefox nautilus kitty cava rofi swaybg playerctl \
     brightnessctl waybar wl-clipboard grim slurp nwg-look \
     pipewire zenity wlogout xdg-desktop-portal-hyprland hyprpolkitagent cliphist hypridle hyprlock wireplumber pipewire-audio \
-    xdg-user-dirs git unzip build-essential curl wget \
+    xdg-user-dirs git unzip build-essential curl gdm3 wget \
     fonts-noto-color-emoji fonts-nerd-symbols fonts-jetbrains-mono
+
 
 info "Enabling PipeWire services..."
 if [ -z "${XDG_RUNTIME_DIR:-}" ]; then

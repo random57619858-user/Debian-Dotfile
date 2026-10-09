@@ -98,7 +98,7 @@ info "Updating and installing base packages..."
 sudo apt update
 sudo apt full-upgrade 
 sudo apt install -y \
-    hyprland firefox nautilus kitty cava rofi swaybg playerctl \
+    hyprland firefox nautilus kitty cava rofi hyprpaper playerctl \
     brightnessctl waybar wl-clipboard grim slurp nwg-look \
     pipewire zenity wlogout xdg-desktop-portal-hyprland hyprpolkitagent cliphist hypridle hyprlock wireplumber pipewire-audio \
     xdg-user-dirs git unzip build-essential curl gdm3 wget \

@@ -103,16 +103,18 @@ sudo apt update
 info "Installing Hyprland stack from backports..."
 sudo apt install -y -t trixie-backports \
     hyprland hypridle hyprlock hyprpolkitagent \
-    xdg-desktop-portal-hyprland
+    xdg-desktop-portal-hyprland \
+    pipewire pipewire-audio pipewire-pulse pipewire-bin \
+    wireplumber
 
 info "Installing desktop tools..."
 sudo apt install -y \
     gdm3 \
-    firefox nautilus kitty cava rofi hyprpaper playerctl \
+    firefox-esr nautilus kitty cava rofi hyprpaper playerctl \
     brightnessctl waybar wl-clipboard grim slurp nwg-look \
-    pipewire zenity wlogout cliphist wireplumber pipewire-audio \
+    zenity wlogout cliphist \
     xdg-user-dirs git unzip build-essential curl wget \
-    fonts-noto-color-emoji fonts-nerd-symbols fonts-jetbrains-mono
+    fonts-noto-color-emoji fonts-jetbrains-mono
 
 info "Enabling GDM..."
 sudo systemctl enable gdm3

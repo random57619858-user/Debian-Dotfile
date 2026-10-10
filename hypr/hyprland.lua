@@ -10,13 +10,13 @@ local fileManager = "nautilus"
 
 hl.on("hyprland.start", function()
 hl.exec_cmd("waybar")
-    hl.exec_cmd("$HOME/.config/rofi/wallpaper.sh restore")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("sleep 2 && $HOME/.config/hypr/welcome.sh")
-    hl.exec_cmd("hyprpaper")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
+    hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("~/.config/rofi/wallpaper.sh restore")	
 end)
 
 hl.env("HYPRCURSOR_THEME", "Fluent-dark-cursors")

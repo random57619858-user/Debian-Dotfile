@@ -2,7 +2,6 @@
 set -euo pipefail
 
 CACHE_FILE="$HOME/.cache/current_wallpaper"
-CACHE_DIR="$(dirname "$CACHE_FILE")"
 
 detect_image_dir() {
     for dir in "$HOME/Pictures" "$HOME/Images" "$HOME/Imágenes"; do
@@ -20,6 +19,22 @@ require_cmd() {
         exit 1
     fi
 }
+
+apply_wallpaper() {
+    local img="$1"
+    hyprctl hyprpaper unload all >/dev/null 2>&1 || true
+    hyprctl hyprpaper preload "$img" >/dev/null 2>&1 || true
+    hyprctl hyprpaper wallpaper ",$img" >/dev/null 2>&1 || true
+}
+
+if [ "${1:-}" = "restore" ]; then
+    sleep 0.5
+    [ -f "$CACHE_FILE" ] || exit 0
+    saved=$(cat "$CACHE_FILE")
+    [ -f "$saved" ] || exit 0
+    apply_wallpaper "$saved"
+    exit 0
+fi
 
 require_cmd hyprctl
 require_cmd rofi
@@ -45,10 +60,8 @@ chosen=$(awk -F'|' '{print $1}' "$TEMP_LIST" | rofi -dmenu -p "󰸉 Wallpaper" -
 if [ -n "${chosen:-}" ]; then
     full_path=$(grep -F "$chosen|" "$TEMP_LIST" | head -n 1 | cut -d'|' -f2-)
     if [ -f "$full_path" ]; then
-        mkdir -p "$CACHE_DIR"
+        mkdir -p "$(dirname "$CACHE_FILE")"
         echo "$full_path" > "$CACHE_FILE"
-        hyprctl hyprpaper unload all >/dev/null 2>&1 || true
-        hyprctl hyprpaper preload "$full_path" >/dev/null 2>&1 || true
-        hyprctl hyprpaper wallpaper ",$full_path" >/dev/null 2>&1 || true
+        apply_wallpaper "$full_path"
     fi
 fi

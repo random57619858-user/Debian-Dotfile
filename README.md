@@ -52,7 +52,7 @@ chmod +x install.sh
 ./install.sh
 ```
 
-### Option B — Debian Stable + Backports
+### Option B — Debian Stable + Backports (BETA)
 
 ```bash
 git clone https://github.com/random57619858-user/Debian-Hypr-Dotfiles
